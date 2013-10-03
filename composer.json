@@ -1,0 +1,24 @@
+{
+    "name": "creolab/shop",
+    "description": "Ecommerce module for Krustr CMS",
+    "keywords": ["shop", "webshop", "ecommerce", "cart", "laravel"],
+    "authors": [
+        {
+            "name": "Boris Strahija",
+            "email": "bstrahija@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "laravel/framework": "4.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Creolab\\Shop": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
