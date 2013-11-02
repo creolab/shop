@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "laravel/framework": "~4"
+        "creolab/krustr": "dev-master",
+        "creolab/cart": "dev-master"
     },
     "autoload": {
         "classmap": [
