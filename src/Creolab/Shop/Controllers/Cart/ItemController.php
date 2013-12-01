@@ -36,8 +36,19 @@ class ItemController extends \Controller {
 			$qty   = (int) Input::get('qty', 1);
 			$price = (float) $entry->field('price');
 
+			// Prepare the item
+			$item = array(
+				'id'       => $id,
+				'title'    => $entry->title,
+				'price'    => (float) $entry->price,
+				'quantity' => $qty,
+			);
+
+			// Add some content data
+			if ($image = $entry->field('image')) $item['image'] = $image;
+
 			// Add to cart
-			if ($qty >= 1 and $price) Cart::add(array('id' => $id, 'title' => $entry->title, 'price' => (float) $entry->price, 'quantity' => $qty));
+			if ($qty >= 1 and $price) Cart::add($item);
 
 			// Respond
 			$response = array('result' => 'ok');
