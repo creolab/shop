@@ -5,8 +5,16 @@ use Krustr\Repositories\Interfaces\EntryRepositoryInterface;
 
 class ItemController extends \Controller {
 
+	/**
+	 * Content entry repository
+	 * @var EntryRepositoryInterface
+	 */
 	protected $entries;
 
+	/**
+	 * Initialize dependencies
+	 * @param EntryRepositoryInterface $entries
+	 */
 	public function __construct(EntryRepositoryInterface $entries)
 	{
 		$this->entries = $entries;
@@ -20,6 +28,9 @@ class ItemController extends \Controller {
 	{
 		$id = Input::get('id');
 		$entry = $this->entries->find($id);
+		echo \Cart::id();
+		echo '<pre>'; print_r(var_dump($entry)); echo '</pre>';
+		die();
 
 		if ($entry) Cart::addItem($id, 29.99, 7);
 
