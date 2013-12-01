@@ -5,8 +5,16 @@ use Krustr\Repositories\Interfaces\EntryRepositoryInterface;
 
 class ItemController extends \Controller {
 
+	/**
+	 * Entry repository
+	 * @var EntryRepositoryInterface
+	 */
 	protected $entries;
 
+	/**
+	 * Initialize dependencies
+	 * @param EntryRepositoryInterface $entries
+	 */
 	public function __construct(EntryRepositoryInterface $entries)
 	{
 		$this->entries = $entries;
@@ -18,19 +26,36 @@ class ItemController extends \Controller {
 	 */
 	public function store()
 	{
-		$id = Input::get('id');
+		// Find entry
+		$id    = Input::get('id');
 		$entry = $this->entries->find($id);
 
-		if ($entry) Cart::addItem($id, 29.99, 7);
+		if ($entry)
+		{
+			// Get quantity and price
+			$qty   = (int) Input::get('qty', 1);
+			$price = (float) $entry->field('price');
+
+			// Add to cart
+			if ($qty >= 1 and $price) Cart::add(array('id' => $id, 'title' => $entry->title, 'price' => (float) $entry->price, 'quantity' => $qty));
+
+			// Respond
+			$response = array('result' => 'ok');
+		}
+		else
+		{
+			$response = array('result' => 'error');
+		}
 
 		// Build response
-		return Response::json(array(
-			'result'      => 'ok',
-			'item_count'  => Cart::getQuantity(),
-			'total_price' => Cart::getTotal(),
-		));
+		return Response::json(array_merge($response, array('item_count'  => Cart::quantity(), 'total_price' => Cart::total())));
 	}
 
+	/**
+	 * Update item in cart
+	 * @param  string $id
+	 * @return Response
+	 */
 	public function update($id)
 	{
 		return array();
@@ -45,6 +70,11 @@ class ItemController extends \Controller {
 		// ));
 	}
 
+	/**
+	 * Remove item from cart
+	 * @param  string $id
+	 * @return Response
+	 */
 	public function destroy($id)
 	{
 		return array();

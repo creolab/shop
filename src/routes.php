@@ -10,3 +10,4 @@ Route::delete('cart/items/{id}', array('as' => 'cart.items.remove',  'uses' => '
 
 // ! Cart
 Route::delete('cart/empty',      array('as' => 'cart.empty',   'uses' => 'Creolab\Shop\Controllers\Cart\CartController@emptyItems'));
+Route::get('cart/empty',         array('as' => 'cart.empty',   'uses' => 'Creolab\Shop\Controllers\Cart\CartController@emptyItems'));
