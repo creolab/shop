@@ -40,7 +40,7 @@ class ItemController extends \Controller {
 			$item = array(
 				'id'       => $id,
 				'title'    => $entry->title,
-				'price'    => (float) $entry->price,
+				'price'    => $price,
 				'quantity' => $qty,
 			);
 
@@ -88,11 +88,9 @@ class ItemController extends \Controller {
 	 */
 	public function destroy($id)
 	{
-		return array();
+		Cart::remove($id);
 
-
-		// Cart::removeItem($id);
-		// return Response::json(array('result' => 'ok'));
+		return Response::json(array('result' => 'ok', 'item_count'  => Cart::quantity(), 'total_price' => Cart::total()));
 	}
 
 }
