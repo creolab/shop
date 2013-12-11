@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration {
 			$table->integer('cart_id')->index();
 			$table->integer('count');
 			$table->float('total');
-			$table->string('status', 20);
+			$table->string('status', 20)->index();
 			$table->timestamps();
 		});
 	}
